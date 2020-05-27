@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/eventuate-examples-docker-images
+    steps:
+      - checkout
+      - run:
+          name: Publish artifacts
+          command: |
+            TERM=dumb ./deploy-artifacts.sh
