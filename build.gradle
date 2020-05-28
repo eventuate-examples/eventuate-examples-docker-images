@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.2"
+    }
+}
+
+apply plugin: 'docker-compose'
+
+dockerCompose {
+    javaexample {
+        projectName = null
+        useComposeFiles = ["java-example-base-image/docker-compose.yml"]
+    }
+}
