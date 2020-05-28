@@ -1,13 +1,27 @@
+
 #! /bin/bash -e
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-export DOCKER_IMAGE_TAG=latest
+VERSION=$BRANCH
 
-docker login -u ${DOCKER_USER_ID?} -p ${DOCKER_PASSWORD?}
+DOCKER_REPO=eventuateio
+DOCKER_COMPOSE_PREFIX=eventuateexamples_
+DOCKER_REMOTE_PREFIX=eventuate-
 
-./gradlew javaexampleComposePull || echo no image to pull
+function tagAndPush() {
+  LOCAL=$1
+  REMOTE=$2
+  FULL_REMOTE=${DOCKER_REMOTE_PREFIX}${REMOTE}
+  $PREFIX docker tag ${DOCKER_COMPOSE_PREFIX?}$LOCAL $DOCKER_REPO/${FULL_REMOTE}:$VERSION
+  $PREFIX docker tag ${DOCKER_COMPOSE_PREFIX?}$LOCAL $DOCKER_REPO/${FULL_REMOTE}:latest
+  echo Pushing $DOCKER_REPO/${FULL_REMOTE}:$VERSION
+  $PREFIX docker push $DOCKER_REPO/${FULL_REMOTE}:$VERSION
+  $PREFIX docker push $DOCKER_REPO/${FULL_REMOTE}:latest
+}
 
-./gradlew javaexampleComposeBuild
+$PREFIX docker login -u ${DOCKER_USER_ID?} -p ${DOCKER_PASSWORD?}
 
-./gradlew javaexampleComposePush
+docker images
+
+tagAndPush "javaexamplebaseimage" "java-example-base-image"
