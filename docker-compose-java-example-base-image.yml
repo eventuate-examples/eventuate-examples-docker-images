@@ -1,0 +1,6 @@
+version: '3'
+services:
+
+  java-example-base-image:
+      build: ./java-example-base-image
+      image: eventuateio/eventuate-examples-docker-images-java-example-base-image:${DOCKER_IMAGE_TAG:?required DOCKER_IMAGE_TAG}

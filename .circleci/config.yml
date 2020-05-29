@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/eventuate-examples-docker-images
+    steps:
+      - checkout
+      - run:
+          name: Publish artifacts
+          command: |
+            ./.circleci/upgrade-docker-compose.sh
+            TERM=dumb ./deploy-artifacts.sh
