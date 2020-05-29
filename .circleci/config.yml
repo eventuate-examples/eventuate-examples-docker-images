@@ -1,10 +1,12 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: cimg/base:2020.01
     working_directory: ~/eventuate-examples-docker-images
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Publish artifacts
           command: |
