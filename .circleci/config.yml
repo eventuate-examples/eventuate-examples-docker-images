@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: cimg/base:2020.01
+        user: root
     working_directory: ~/eventuate-examples-docker-images
     steps:
       - checkout
