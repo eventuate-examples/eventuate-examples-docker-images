@@ -7,3 +7,6 @@ services:
   micronaut-example-base-image:
       build: ./micronaut-example-base-image
       image: eventuateio/eventuate-examples-docker-images-micronaut-example-base-image:${DOCKER_IMAGE_TAG:?required DOCKER_IMAGE_TAG}
+  quarkus-example-base-image:
+    build: ./quarkus-example-base-image
+    image: eventuateio/eventuate-examples-docker-images-quarkus-example-base-image:${DOCKER_IMAGE_TAG:?required DOCKER_IMAGE_TAG}
