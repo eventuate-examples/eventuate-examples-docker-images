@@ -1,15 +1,6 @@
 #!/bin/bash -e
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
-if [  $BRANCH == "master" ] ; then
-  export DOCKER_IMAGE_TAG=BUILD-${CIRCLE_BUILD_NUM?}
-elif [[  $BRANCH =~ RELEASE$ ]] ; then
-  export DOCKER_IMAGE_TAG=$BRANCH
-else
-  echo cannot figure out version for this branch $BRANCH
-  exit -1
-fi
+DOCKER_IMAGE_TAG=$(target-tag.sh)
 
 docker-compose build
 
