@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-DOCKER_IMAGE_TAG=$(target-tag.sh)
+DOCKER_IMAGE_TAG=$(./target-tag.sh)
 
 docker-compose build
 
