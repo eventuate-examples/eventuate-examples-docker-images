@@ -2,14 +2,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:stable
         user: root
     working_directory: ~/eventuate-examples-docker-images
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.11
+      - run:
+          name: Publish multi-arch artifacts
+          command: |
+            docker context create tls-env
+            docker buildx create tls-env --use
+            docker run --privileged --rm tonistiigi/binfmt --install arm64,arm
+            ./deploy-multi-arch-artifacts.sh
       - run:
           name: Publish artifacts
           command: |
-            ./.circleci/upgrade-docker-compose.sh
-            TERM=dumb ./deploy-artifacts.sh
+            ./deploy-artifacts.sh
