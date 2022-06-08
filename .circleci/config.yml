@@ -16,7 +16,3 @@ jobs:
             docker buildx create tls-env --use
             docker run --privileged --rm tonistiigi/binfmt --install arm64,arm
             ./deploy-multi-arch-artifacts.sh
-      - run:
-          name: Publish artifacts
-          command: |
-            ./deploy-artifacts.sh
