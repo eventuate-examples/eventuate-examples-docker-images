@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+          url "https://plugins.gradle.org/m2/"
+        }
+        eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
+    }
+    dependencies {
+        classpath "io.eventuate.plugins.gradle:eventuate-plugins-gradle-publish:$eventuatePluginsGradleVersion"
+    }
+}
+
+apply plugin: "io.eventuate.plugins.gradle.publish.EventuatePublish"
+
+group = "io.eventuate.examples.dockerimages"
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+task writeProperties(type: WriteProperties) {
+    outputFile "${project.buildDir}/generated/eventuate.examples.dockerimages.version.properties"
+    property 'version', version
+}
+
+
+processResources.from(writeProperties)
+
+gradle.projectsEvaluated {
+    task aggregateJavaDocs(type: Javadoc) {
+        description = 'Aggregated Javadoc API documentation of all subprojects.'
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+
+        destinationDir file("$buildDir/docs/javadoc")
+    }
+}
+
