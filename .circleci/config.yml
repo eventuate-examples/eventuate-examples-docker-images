@@ -1,6 +1,6 @@
-version: 2
+version: 2.1
 jobs:
-  build:
+  build-and-publish:
     docker:
       - image: cimg/openjdk:17.0.14
         user: root
@@ -16,5 +16,10 @@ jobs:
             docker buildx create tls-env --use
             docker run --privileged --rm tonistiigi/binfmt --install arm64,arm
             ./deploy-multi-arch-artifacts.sh
-    context:
-      - publish
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-and-publish:
+          context:
+            - publish
