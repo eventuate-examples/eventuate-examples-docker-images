@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Publish multi-arch artifacts
           command: |
-            ./gradlew -P version=$(./target-tag.sh) publishEventuateArtifacts
+            ./gradlew publishEventuateArtifacts
             docker context create tls-env
             docker buildx create tls-env --use
             docker run --privileged --rm tonistiigi/binfmt --install arm64,arm
