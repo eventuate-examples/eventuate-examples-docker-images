@@ -14,8 +14,8 @@ buildscript {
 apply plugin: "io.eventuate.plugins.gradle.publish.EventuatePublish"
 
 group = "io.eventuate.examples.dockerimages"
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
 
 task writeProperties(type: WriteProperties) {
     outputFile "${project.buildDir}/generated/eventuate.examples.dockerimages.version.properties"
@@ -32,5 +32,8 @@ gradle.projectsEvaluated {
 
         destinationDir file("$buildDir/docs/javadoc")
     }
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
